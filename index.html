@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR NETLIFY CONFIG GENERATOR V7.7</title>
+    <title>IR NETLIFY CONFIG GENERATOR V7.8</title>
     <style>
         :root {
             --theme-netlify: #00cfff; 
-            --neon-red: #ff4444;      
+            --neon-red: #ff0000;      
             --neon-orange: #ff9100;   
-            --neon-green: #00e676;    
-            
+            --neon-green: #00e676;            
             --dark-bg: #0a0b10;
             --card-bg: #161b22;
             --text-color: #e6edf3;
             --scroll-thumb: #30363d;
-            
             --current-theme: var(--theme-netlify);
         }
 
@@ -129,10 +127,23 @@
         }
 
         #tab-netlify.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.15); }
-        #btn-shecan.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.10); }
-        #btn-normal.active { border-color: var(--neon-green); color: var(--neon-green); background: rgba(30, 250, 0, 0.13); }
-        #btn-custom.active { border-color: var(--neon-orange); color: var(--neon-orange); background: rgba(255, 170, 0, 0.13); }
-        #btn-default.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.10); }
+		#btn-shecan.active { 
+			border-color: var(--theme-netlify); 
+			color: var(--theme-netlify); 
+			background: rgba(0, 207, 255, 0.15); 
+			box-shadow: 0 0 10px rgba(0, 207, 255, 0.5);
+		}
+
+		#btn-normal.active { 
+			border-color: var(--theme-netlify); 
+			color: var(--theme-netlify); 
+			background: rgba(0, 207, 255, 0.15); 
+			box-shadow: 0 0 10px rgba(0, 207, 255, 0.5);
+		}
+        #btn-custom.active { border-color: var(--neon-orange); color: var(--neon-orange); background: rgba(255, 170, 0, 0.13); 
+			box-shadow: 0 0 10px rgba(225, 117, 0, 0.5);}
+        #btn-default.active { border-color: var(--theme-netlify); color: var(--theme-netlify); background: rgba(0, 207, 255, 0.10); 
+			box-shadow: 0 0 10px rgba(0, 207, 255, 0.5); }
 
         .input-group { margin-bottom: 15px; }
 
@@ -152,7 +163,7 @@
             font-size: 0.6rem;
             border: 2px solid rgba(0, 80, 40, 0.9);
             padding: 2px 8px;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: 0.3s;
             display: none;
         }
@@ -303,20 +314,57 @@
 			outline: 1px solid var(--dark-bg); 
 			box-shadow: 0 0 2px var(--dark-bg);
 		}
+		
+			.error-border {
+			border: 3px solid var(--neon-red) !important;
+			box-shadow: 0 0 10px rgba(255, 0, 0, 0.9) !important;
+			animation: shake 0.3s ease-in-out;
+		}
+
+		@keyframes shake {
+			0% { transform: translateX(0); }
+			25% { transform: translateX(-5px); }
+			50% { transform: translateX(5px); }
+			75% { transform: translateX(-5px); }
+			100% { transform: translateX(0); }
+		}
+		.btn-paste {
+    color: var(--theme-netlify);
+    border: 1px solid var(--theme-netlify);
+}
+
+.btn-default-action:hover {
+    background: rgba(255, 145, 0, 0.15);
+    box-shadow: 0 0 8px rgba(255, 145, 0, 0.4);
+}
+
+.btn-clear:hover {
+    background: rgba(255, 68, 68, 0.15);
+    box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
+}
+
+.btn-paste:hover {
+    background: rgba(0, 207, 255, 0.15);
+    box-shadow: 0 0 8px rgba(0, 207, 255, 0.4);
+}
+
+.action-btn:active {
+    transform: scale(0.92);
+}
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.7</h2>
+    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.8</h2>
 
     <div class="tabs">
         <button class="tab-btn active" id="tab-netlify">Netlify</button>
     </div>
 
     <div id="netlify-options">
-        <button class="sub-tab-btn" id="btn-shecan" onclick="setNetlifyMode('shecan')">Free / Public</button>
-        <button class="sub-tab-btn" id="btn-normal" onclick="setNetlifyMode('normal')">Shecan Pro</button>
+        <button class="sub-tab-btn" id="btn-shecan" onclick="setNetlifyMode('shecan')">IP + SNI</button>
+        <button class="sub-tab-btn" id="btn-normal" onclick="setNetlifyMode('normal')">Direct SNI</button>
     </div>
 
     <div id="netlify-config-type">
@@ -349,7 +397,7 @@
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn btn-default-action" onclick="loadDefaultDomains()">Default</button>
                 <button class="action-btn btn-clear" onclick="document.getElementById('domain-list').value = ''">Clear</button>
-				<button class="action-btn" style="color: #00cfff; border: 1px solid #00cfff;" onclick="pasteToArea('domain-list')">Paste</button>
+				<button class="action-btn btn-paste" onclick="pasteToArea('domain-list')">Paste</button>
             </div>
         </div>
         <textarea id="domain-list" rows="6" placeholder="Enter SNI line by line..."></textarea>
@@ -361,7 +409,7 @@
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn btn-default-action" onclick="loadDefaultIps()">Default</button>
                 <button class="action-btn btn-clear" onclick="document.getElementById('ip-list').value = ''">Clear</button>
-				<button class="action-btn" style="color: #00cfff; border: 1px solid #00cfff;" onclick="pasteToArea('ip-list')">Paste</button>
+				<button class="action-btn btn-paste" onclick="pasteToArea('ip-list')">Paste</button>
             </div>
         </div>
         <textarea id="ip-list" rows="4" placeholder="Enter IPs line by line..."></textarea>
@@ -544,46 +592,66 @@ const data = {
         document.getElementById('ip-list').value = data.netlify_shecan.ips.join('\n');
     }
 
-    function getInputs() {
-        let rawHost = document.getElementById('main-host').value.trim();
-        let cleanHost = rawHost.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
-        let host = cleanHost.replace(/[^a-zA-Z0-9.-]/g, '');
+	function getInputs() {
+	    let hasError = false;
+	
+	    const hostElement = document.getElementById('main-host');
+	    const sniElement = document.getElementById('domain-list');
+	    const ipElement = document.getElementById('ip-list');
+	
+	    let rawHost = hostElement.value.trim();
+	    let cleanHost = rawHost.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
+	    let host = cleanHost.replace(/[^a-zA-Z0-9.-]/g, '');
+	
+	    const sniInput = sniElement.value.trim();
+	    const ipInput = ipElement.value.trim();
 
-        const sniInput = document.getElementById('domain-list').value.trim();
-        if (!sniInput) {
-            alert("SNI is required!");
-            return null;
-        }
-        const domains = sniInput.split('\n')
-            .map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, '')) 
-            .filter(d => d.length > 0);
+	    if (!host) {
+	        showError(hostElement);
+	        hasError = true;
+	    }
+	
+	    if (!sniInput) {
+	        showError(sniElement);
+	        hasError = true;
+	    }
 
-        let ips = [];
-        if (netlifyMode === 'shecan') {
-            const ipInput = document.getElementById('ip-list').value.trim();
-            if (!ipInput) {
-                alert("IP is required!");
-                return null;
-            }
-            ips = ipInput.split('\n')
-                .map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, ''))
-                .filter(i => i.length > 0);
-        }
+	    let ips = [];
+	    if (netlifyMode === 'shecan') {
+	        if (!ipInput) {
+	            showError(ipElement);
+	            hasError = true;
+	        } else {
+	            ips = ipInput.split('\n')
+	                .map(i => i.trim().replace(/[^a-fA-F0-9.:]/g, ''))
+	                .filter(i => i.length > 0);
+	        }
+	    }
+	
+	    if (hasError) return null;
+	
+	    const domains = sniInput.split('\n')
+	        .map(d => d.trim().replace(/[^a-zA-Z0-9.-]/g, '')) 
+	        .filter(d => d.length > 0);
+	
+	    let user = "Telegram-Parsashonam"; 
+	    let path = "/p4r34m"; 
+	    if (configMode === 'custom') {
+	        user = document.getElementById('custom-user').value.trim() || user;
+	        let p = document.getElementById('custom-path').value.trim();
+	        if(p) path = p.startsWith('/') ? p : '/' + p;
+	    }
+	    return { host, domains, ips, user, path };
+	}
 
-        if (!host) {
-            alert("Domain is required!");
-            return null;
-        }
-    
-        let user = "Telegram-Parsashonam"; 
-        let path = "/p4r34m"; 
-        if (configMode === 'custom') {
-            user = document.getElementById('custom-user').value.trim() || user;
-            let p = document.getElementById('custom-path').value.trim();
-            if(p) path = p.startsWith('/') ? p : '/' + p;
-        }
-        return { host, domains, ips, user, path };
-    }
+	function showError(element) {
+	    element.classList.add('error-border');
+	    
+	    element.addEventListener('input', function removeError() {
+	        element.classList.remove('error-border');
+	        element.removeEventListener('input', removeError);
+	    });
+	}
 
     function generateConfigs() {
         const inputs = getInputs();
@@ -716,7 +784,7 @@ const data = {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `IR_NETLIFY-${selectedCore}-balanced.json`;
+        a.download = `IR_NETLIFY_${selectedCore}_CUSTOM.json`;
         a.click();
     }
 
@@ -750,7 +818,7 @@ const data = {
 	    const url = URL.createObjectURL(blob);
 	    const a = document.createElement("a");
 	    a.href = url;
-	    a.download = "IR-NETLIFY-Configs.txt"; 
+	    a.download = "IR_NETLIFY_Configs.txt"; 
 	    document.body.appendChild(a);
 	    a.click();
 	    
@@ -788,7 +856,7 @@ const data = {
 				console.log("PASTED ✓.");
 			}
 		} catch (err) {
-			alert("خطا: مرورگر اجازه دسترسی به کلیپ‌بورد را نداد. لطفاً دستی پیست کنید.");
+			alert("Copy failed. Please copy manually.");
 			console.error("Failed to read clipboard: ", err);
 		}
 	}
