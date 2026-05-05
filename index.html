@@ -338,7 +338,7 @@
     <div class="input-group">
         <label id="host-label" style="display: flex; justify-content: space-between; align-items: center;">
             <span>Netlify Domain</span>
-            <a href="https://t.me/IR_NETLIFY" target="_blank" id="tutorial-link" class="tutorial-link">Tutorial</a>
+            <a href="https://t.me/IR_NETLIFY/7" target="_blank" id="tutorial-link" class="tutorial-link">Tutorial</a>
         </label>
         <input type="text" id="main-host" placeholder="example.netlify.app" oninput="this.value = this.value.replace(/[^a-zA-Z0-9./:-]/g, '')">
     </div>
@@ -404,17 +404,103 @@
     let selectedCore = 'xray';
     let lastGeneratedJson = "";
 
-    const data = {
-        netlify_normal: {
-            label: "Netlify Domain",
-            template: "vless://{USER}@{ADDRESS}:443?encryption=none&security=tls&sni={SNI}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host={HOST}&path={PATH}&mode=auto#🌐%20@IR_NETLIFY%20%20%20{NAME}",
-            defaults: ["helm.sh","keda.sh","rook.io","istio.io","cilium.io","fluxcd.io","harbor.io","calico.org","linkerd.io","openebs.io","tekton.dev","longhorn.io","blog.helm.sh","docs.helm.sh","crossplane.io","kubernetes.io","kubebuilder.io","cert-manager.io","letsencrypt.org","kind.sigs.k8s.io","kops.sigs.k8s.io","krew.sigs.k8s.io","kwok.sigs.k8s.io","kueue.sigs.k8s.io","jobset.sigs.k8s.io","kaniko.sigs.k8s.io","minikube.sigs.k8s.io","operatorframework.io","container.sigs.k8s.io","kustomize.sigs.k8s.io","argo-cd.readthedocs.io","cluster-api.sigs.k8s.io","descheduler.sigs.k8s.io","gateway-api.sigs.k8s.io","external-dns.sigs.k8s.io","service-apis.sigs.k8s.io","image-builder.sigs.k8s.io","kubectl.docs.kubernetes.io","metrics-server.sigs.k8s.io","scheduler-plugins.sigs.k8s.io","controller-runtime.sigs.k8s.io","prometheus-operator.sigs.k8s.io","node-feature-discovery.sigs.k8s.io","hierarchical-namespaces.sigs.k8s.io","secrets-store-csi-driver.sigs.k8s.io","security-profiles-operator.sigs.k8s.io","cluster-proportional-autoscaler.sigs.k8s.io"]
-        },
-        netlify_shecan: {
-            ips: ["50.7.5.83","50.7.5.85","50.7.87.2","50.7.87.3","50.7.87.4","50.7.87.5","144.76.1.88","76.76.21.112","85.10.207.48","94.130.13.19","94.130.33.41","94.130.50.12","95.216.69.37","198.252.206.1","204.12.196.34","94.130.70.160","65.109.34.234","104.18.25.196","63.141.252.203","138.201.54.122","142.54.178.211","149.154.167.99","178.22.122.101","204.79.197.220","216.239.38.120"],
-            defaults: ["helm.sh","keda.sh","rook.io","istio.io","cilium.io","fluxcd.io","harbor.io","calico.org","linkerd.io","openebs.io","tekton.dev","longhorn.io","blog.helm.sh","docs.helm.sh","crossplane.io","kubernetes.io","kubebuilder.io","cert-manager.io","letsencrypt.org","kind.sigs.k8s.io","kops.sigs.k8s.io","krew.sigs.k8s.io","kwok.sigs.k8s.io","kueue.sigs.k8s.io","jobset.sigs.k8s.io","kaniko.sigs.k8s.io","minikube.sigs.k8s.io","operatorframework.io","container.sigs.k8s.io","kustomize.sigs.k8s.io","argo-cd.readthedocs.io","cluster-api.sigs.k8s.io","descheduler.sigs.k8s.io","gateway-api.sigs.k8s.io","external-dns.sigs.k8s.io","service-apis.sigs.k8s.io","image-builder.sigs.k8s.io","kubectl.docs.kubernetes.io","metrics-server.sigs.k8s.io","scheduler-plugins.sigs.k8s.io","controller-runtime.sigs.k8s.io","prometheus-operator.sigs.k8s.io","node-feature-discovery.sigs.k8s.io","hierarchical-namespaces.sigs.k8s.io","secrets-store-csi-driver.sigs.k8s.io","security-profiles-operator.sigs.k8s.io","cluster-proportional-autoscaler.sigs.k8s.io"]
-        }
-    };
+const sharedDefaults = [
+    "helm.sh",
+    "keda.sh",
+    "rook.io",
+    "istio.io",
+    "cilium.io",
+    "fluxcd.io",
+    "harbor.io",
+    "calico.org",
+    "linkerd.io",
+    "openebs.io",
+    "tekton.dev",
+    "longhorn.io",
+    "blog.helm.sh",
+    "docs.helm.sh",
+    "crossplane.io",
+    "kubernetes.io",
+    "kubebuilder.io",
+    "cert-manager.io",
+    "letsencrypt.org",
+    "kind.sigs.k8s.io",
+    "kops.sigs.k8s.io",
+    "krew.sigs.k8s.io",
+    "kwok.sigs.k8s.io",
+    "kueue.sigs.k8s.io",
+    "jobset.sigs.k8s.io",
+    "kaniko.sigs.k8s.io",
+    "minikube.sigs.k8s.io",
+    "operatorframework.io",
+    "container.sigs.k8s.io",
+    "kustomize.sigs.k8s.io",
+    "argo-cd.readthedocs.io",
+    "cluster-api.sigs.k8s.io",
+    "descheduler.sigs.k8s.io",
+    "gateway-api.sigs.k8s.io",
+    "external-dns.sigs.k8s.io",
+    "service-apis.sigs.k8s.io",
+    "image-builder.sigs.k8s.io",
+    "kubectl.docs.kubernetes.io",
+    "metrics-server.sigs.k8s.io",
+    "scheduler-plugins.sigs.k8s.io",
+    "controller-runtime.sigs.k8s.io",
+    "prometheus-operator.sigs.k8s.io",
+    "node-feature-discovery.sigs.k8s.io",
+    "hierarchical-namespaces.sigs.k8s.io",
+    "secrets-store-csi-driver.sigs.k8s.io",
+    "security-profiles-operator.sigs.k8s.io",
+    "cluster-proportional-autoscaler.sigs.k8s.io"
+];
+
+const data = {
+    netlify_normal: {
+        label: "Netlify Domain",
+        template: "vless://{USER}@{ADDRESS}:443?encryption=none&security=tls&sni={SNI}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host={HOST}&path={PATH}&mode=auto#🌐%20@IR_NETLIFY%20%20%20{NAME}",
+        defaults: sharedDefaults
+    },
+
+    netlify_shecan: {
+        ips: [
+            "50.7.5.83",
+            "50.7.5.85",
+            "50.7.87.2",
+            "50.7.87.3",
+            "50.7.87.4",
+            "50.7.87.5",
+            "144.76.1.88",
+            "216.24.57.1",
+            "37.16.18.81",
+            "52.250.41.2",
+            "76.76.21.21",
+            "76.76.21.112",
+            "85.10.207.48",
+            "94.130.13.19",
+            "94.130.33.41",
+            "94.130.50.12",
+            "95.216.69.37",
+            "198.202.211.1",
+            "198.252.206.1",
+            "204.12.196.34",
+            "216.150.1.193",
+            "65.109.34.234",
+            "94.130.70.160",
+            "104.18.25.196",
+            "138.201.54.122",
+            "142.54.178.211",
+            "149.154.167.99",
+            "178.22.122.101",
+            "204.79.197.220",
+            "213.180.193.56",
+            "216.239.38.120",
+            "40.114.177.246",
+            "63.141.252.203",
+            "64.239.109.193"
+        ],
+        defaults: sharedDefaults
+    }
+};
 
     function setPlatform() {
         document.getElementById('tutorial-link').style.display = 'inline-block';
@@ -504,7 +590,7 @@
         
         let results = [];
         if (netlifyMode === 'shecan') {
-            domains.forEach(sni => ips.forEach(ip => results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${path}&mode=auto#🌐%20@IR_NETLIFY%20%20${sni}%20${ip}`)));
+            domains.forEach(sni => ips.forEach(ip => results.push(`vless://${user}@${ip}:443?encryption=none&security=tls&sni=${sni}&alpn=h2%2Chttp%2F1.1&insecure=1&allowInsecure=1&type=xhttp&host=${host}&path=${path}&mode=auto#🌐%20@IR_NETLIFY%20%20${sni}%20%20${ip}`)));
         } else {
             domains.forEach(d => results.push(data.netlify_normal.template.replaceAll("{USER}", user).replaceAll("{PATH}", path).replaceAll("{ADDRESS}", d).replaceAll("{SNI}", d).replaceAll("{HOST}", host).replaceAll("{NAME}", d)));
         }
