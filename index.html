@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR NETLIFY CONFIG GENERATOR V7.4</title>
+    <title>IR NETLIFY CONFIG GENERATOR V7.6</title>
     <style>
         :root {
             --theme-netlify: #00cfff; 
@@ -308,7 +308,7 @@
 <body>
 
 <div class="container">
-    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.4</h2>
+    <h2>IR NETLIFY<br>CONFIG GENERATOR V7.6</h2>
 
     <div class="tabs">
         <button class="tab-btn active" id="tab-netlify">Netlify</button>
@@ -349,6 +349,7 @@
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn btn-default-action" onclick="loadDefaultDomains()">Default</button>
                 <button class="action-btn btn-clear" onclick="document.getElementById('domain-list').value = ''">Clear</button>
+				<button class="action-btn" style="color: #00cfff; border: 1px solid #00cfff;" onclick="pasteToArea('domain-list')">Paste</button>
             </div>
         </div>
         <textarea id="domain-list" rows="6" placeholder="Enter SNI line by line..."></textarea>
@@ -360,6 +361,7 @@
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn btn-default-action" onclick="loadDefaultIps()">Default</button>
                 <button class="action-btn btn-clear" onclick="document.getElementById('ip-list').value = ''">Clear</button>
+				<button class="action-btn" style="color: #00cfff; border: 1px solid #00cfff;" onclick="pasteToArea('ip-list')">Paste</button>
             </div>
         </div>
         <textarea id="ip-list" rows="4" placeholder="Enter IPs line by line..."></textarea>
@@ -371,7 +373,7 @@
     <div id="output-container">
         <div class="success-header">
             <span style="color:#3fb950; font-size: 0.7rem; font-weight: bold;">✓ CONFIGS GENERATED</span>
-            <button class="action-btn btn-copy" id="copy-btn" onclick="copyToClipboard('result-area', 'copy-btn')">Copy All</button>
+            <button class="action-btn btn-copy" id="copy-btn" onclick="copyToClipboard('result-area', 'copy-btn')">Copy & Download</button>
         </div>
         <textarea id="result-area" readonly></textarea>
     </div>
@@ -700,7 +702,7 @@ const data = {
             
             const copyBtn = document.getElementById('btn-copy-json');
             const originalText = copyBtn.innerText;
-            copyBtn.innerText = "COPIED!";
+            copyBtn.innerText = "COPIED ✓";
             setTimeout(() => copyBtn.innerText = originalText, 2000);
             
         } catch (err) {
@@ -718,16 +720,56 @@ const data = {
         a.click();
     }
 
-    function copyToClipboard(id, btnId) {
-        const area = document.getElementById(id);
-        area.select();
-        area.setSelectionRange(0, 999999); 
-        document.execCommand("copy");
-    
-        const btn = document.getElementById(btnId);
-        btn.innerText = "COPIED!";
-        setTimeout(() => btn.innerText = "Copy All", 2000);
-    }
+	async function copyToClipboard(id, btnId) {
+	    const area = document.getElementById(id);
+	    const textToCopy = area.value;
+	
+	    if (!textToCopy) {
+	        alert("متنی برای کپی وجود ندارد!");
+	        return;
+	    }
+	
+	    try {
+	        if (navigator.clipboard && window.isSecureContext) {
+	            await navigator.clipboard.writeText(textToCopy);
+	        } else {
+	            const tempTextArea = document.createElement("textarea");
+	            tempTextArea.value = textToCopy;
+	            tempTextArea.style.position = "fixed";
+	            tempTextArea.style.left = "-9999px";
+	            document.body.appendChild(tempTextArea);
+	            tempTextArea.select();
+	            document.execCommand('copy');
+	            document.body.removeChild(tempTextArea);
+	        }
+	    } catch (err) {
+	        console.log("کپی انجام نشد؛ احتمالا حجم متن بالاست.");
+	    }
+	
+	    const blob = new Blob([textToCopy], { type: "text/plain" });
+	    const url = URL.createObjectURL(blob);
+	    const a = document.createElement("a");
+	    a.href = url;
+	    a.download = "IR-NETLIFY-Configs.txt"; 
+	    document.body.appendChild(a);
+	    a.click();
+	    
+	    setTimeout(() => {
+	        document.body.removeChild(a);
+	        window.URL.revokeObjectURL(url);
+	    }, 0);
+	
+	    const btn = document.getElementById(btnId);
+	    btn.innerText = "COPIED & DOWNLOADED✓";
+	    btn.style.borderColor = "#ff4444"; 
+	    btn.style.color = "#ff4444";       
+	
+	    setTimeout(() => {
+	        btn.innerText = "Copy & Download";
+	        btn.style.borderColor = "#3fb950"; 
+	        btn.style.color = "#3fb950";       
+	    }, 3000);
+	}
 
     window.onload = () => { 
         setPlatform(); 
@@ -735,6 +777,21 @@ const data = {
         setNetlifyMode('shecan'); 
         setConfigMode('default'); 
     };
+	
+	
+	async function pasteToArea(targetId) {
+		const area = document.getElementById(targetId);
+		try {
+			const text = await navigator.clipboard.readText();
+			if (text) {
+				area.value += (area.value ? '\n' : '') + text;
+				console.log("PASTED ✓.");
+			}
+		} catch (err) {
+			alert("خطا: مرورگر اجازه دسترسی به کلیپ‌بورد را نداد. لطفاً دستی پیست کنید.");
+			console.error("Failed to read clipboard: ", err);
+		}
+	}
 </script>
 </body>
 </html>
