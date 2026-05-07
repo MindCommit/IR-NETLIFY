@@ -1,10 +1,11 @@
 name: Update VLESS Subscription
 
+# این بخش باعث می‌شود اکشن فقط زمانی اجرا شود که فایل domain.txt تغییر کند
 on:
   push:
     paths:
       - 'domain.txt'
-  workflow_dispatch:
+  workflow_dispatch: # اجازه اجرای دستی از پنل گیت‌هاب را هم می‌دهد
 
 permissions:
   contents: write
@@ -12,22 +13,31 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-    - name: Run generation script
-      run: python generator.py
+      - name: Run generation script
+        run: python generator.py
 
-    - name: Commit and push changes
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add IR_NETLIFY_SUB.txt
-        git diff-index --quiet HEAD || git commit -m "Update subscription configs"
-        git push
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # اضافه کردن فایل خروجی کانفیگ‌ها
+          git add IR_NETLIFY_SUB.txt
+          
+          # بررسی اینکه آیا تغییری وجود دارد یا خیر تا از خطای Commit بیهوده جلوگیری شود
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update subscription configs based on new domain"
+            git push
+          fi
