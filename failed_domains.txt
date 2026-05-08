@@ -1,2 +1,3 @@
 
 ir-netlify-2.net.lify.app
+ir-netlify-1.net.lify.app
