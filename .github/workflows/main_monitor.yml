@@ -1,0 +1,50 @@
+name: IR-NETLIFY Unified Monitor
+
+on:
+  schedule:
+    - cron: '*/2 * * * *' # هر 2 دقیقه چک می‌کند
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  monitor-and-update:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Core Logic
+        id: core_logic
+        run: |
+          # اجرای مانیتورینگ برای چک کردن و تعویض دامنه در فایل‌ها
+          python monitor.py 
+          
+          # چک می‌کنیم آیا فایل domain.txt تغییر کرده یا نه
+          if git diff --quiet domain.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            # فقط اگر دامنه عوض شده بود، ساب را بازسازی کن
+            python generator.py
+          fi
+
+      - name: Save Changes
+        if: steps.core_logic.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add domain.txt active_domains.txt failed_domains.txt IR_NETLIFY_SUB.txt
+          git commit -m "Auto-Fix: New healthy domain set & Sub updated"
+          git push
