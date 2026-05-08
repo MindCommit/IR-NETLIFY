@@ -1,11 +1,10 @@
 name: Update VLESS Subscription
 
-# این بخش باعث می‌شود اکشن فقط زمانی اجرا شود که فایل domain.txt تغییر کند
 on:
   push:
     paths:
       - 'domain.txt'
-  workflow_dispatch: # اجازه اجرای دستی از پنل گیت‌هاب را هم می‌دهد
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -13,7 +12,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,10 +31,8 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # اضافه کردن فایل خروجی کانفیگ‌ها
           git add IR_NETLIFY_SUB.txt
           
-          # بررسی اینکه آیا تغییری وجود دارد یا خیر تا از خطای Commit بیهوده جلوگیری شود
           if git diff --quiet && git diff --staged --quiet; then
             echo "No changes to commit"
           else
