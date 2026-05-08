@@ -21,26 +21,42 @@ def main():
     with open(CURRENT_FILE, "r") as f:
         current = f.read().strip()
     
+    
     if not current or not verify_domain(current):
+        print(f"Current domain {current} failed. Searching for a new one...")
         if current:
             with open(FAILED_FILE, "a") as f:
                 f.write(current + "\n")
         
+
         if os.path.exists(ACTIVE_FILE):
             with open(ACTIVE_FILE, "r") as f:
                 pool = [line.strip() for line in f if line.strip()]
             
-            if pool:
-                next_up = pool.pop(0)
-                with open(CURRENT_FILE, "w") as f:
-                    f.write(next_up)
-                with open(ACTIVE_FILE, "w") as f:
-                    f.write("\n".join(pool))
-                print(f"Switched to: {next_up}")
-            else:
-                print("No more domains left!")
+            found_healthy = False
+            while pool:
+                candidate = pool.pop(0) 
+                print(f"Testing: {candidate}...")
+                
+                if verify_domain(candidate):
+                    with open(CURRENT_FILE, "w") as f:
+                        f.write(candidate)
+                    found_healthy = True
+                    print(f"Success! New healthy domain found: {candidate}")
+                    break 
+                else:
+                    print(f"Candidate {candidate} also failed. Moving to failed list.")
+                    with open(FAILED_FILE, "a") as f:
+                        f.write(candidate + "\n")
+            
+            
+            with open(ACTIVE_FILE, "w") as f:
+                f.write("\n".join(pool))
+                
+            if not found_healthy:
+                print("Alert: All domains in active_domains.txt are broken!")
     else:
-        print("Domain is still healthy.")
+        print(f"Domain {current} is healthy. No action needed.")
 
 if __name__ == "__main__":
     main()
