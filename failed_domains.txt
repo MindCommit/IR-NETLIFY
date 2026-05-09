@@ -4,3 +4,5 @@ splendid-croquembouche-bb4a90.netlify.app
 splendid-croquembouche-bb4a90.netlify.app
 splendid-croquembouche-bb4a90.netlify.app
 ir-netylify-1.netlify.app
+ir-netlify-subasdk9.netlify.app
+dynamic-selkie-ea908e.netlify.app
