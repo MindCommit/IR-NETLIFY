@@ -25,15 +25,13 @@ jobs:
 
       - name: Core Logic
         run: |
-          # ابتدا دامنه خراب را تعویض میکنیم
           python monitor.py 
-          # سپس لینک‌های ساب را با دامنه جدید میسازیم
           python generator.py
 
       - name: Save Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add domain.txt active_domains.txt failed_domains.txt IR_NETLIFY_SUB.txt
-          git commit -m "Auto-Fix: New healthy domain set & Sub updated"
+          git add domain.txt domain_new.txt active_domains.txt active_domains_new.txt failed_domains.txt failed_domains_new.txt IR_NETLIFY_SUB.txt IR_NETLIFY_SUB_new.txt
+          git commit -m "Auto-Fix: Domains updated and Subscriptions regenerated"
           git push
