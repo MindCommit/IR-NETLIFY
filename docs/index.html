@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=460">
-    <title>IR NETLIFY CONFIG GENERATOR V9.1.0</title>
+    <meta name="viewport" content="width=430">
+    <title>IR NETLIFY CONFIG GENERATOR V9.1.1</title>
     <style>
       @font-face {
         font-family: "CustomFont";
@@ -55,7 +55,7 @@
         flex-direction: column;
         padding: 20px;
         box-sizing: border-box;
-        filter: brightness(1) contrast(1.15);
+        filter: brightness(1.1) contrast(1.12);
       }
 
       body::before {
@@ -531,13 +531,33 @@
         color: var(--neon-orange);
         font-weight: bold;
       }
+	  
+.version-warning {
+    color: var(--neon-red);
+    font-size: 0.80rem;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    background: rgba(255, 10, 30, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    border: 3px dashed rgba(255, 10, 0, 0.3);
+}
+
+.version-warning a {
+    color: #bf7e0d;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
     </style>
   </head>
   <body>
     <div class="container">
       <h2>
         IR NETLIFY <br />
-        CONFIG GENERATOR V9.1.0
+        CONFIG GENERATOR V9.1.1
       </h2>
       <div class="tabs">
         <button class="tab-btn active" id="tab-netlify">
@@ -545,6 +565,11 @@
           <span class="info-icon" onclick="showInfo(event, 'netlify')">?</span>
         </button>
       </div>
+<div class="version-warning">
+    این نسخه از کانفیگ ساز فقط روی ورژن 1.0.3 پروژه عمل میکند 
+    <br>
+    برای نسخه قدیمی پروژه از <a href="https://ir-netlify.github.io/NETLIFY/old/">کانفیگ ساز قدیمی</a> استفاده کنید
+</div>
       <div id="netlify-options">
         <button
           class="sub-tab-btn"
@@ -624,6 +649,7 @@
             <option value="server2">Xarheon Server</option>
             <option value="server3">OneSrv98 Server</option>
             <option value="server4">Flare Server</option>
+			<option value="server5">Alwinbalot Server</option>
           </select>
         </div>
       </div>
@@ -787,6 +813,12 @@
           address: "https://flare.diablo0.site:24855",
           path: "/free",
           user: "dab65f2a-48ca-4fe8-9143-06cd28f00a21",
+        },
+        server5: {
+          name: "Alwinbalot",
+          address: "https://solar.latnashobivojod.shop:8096",
+          path: "/alwin",
+          user: "ccee709a-5766-4ced-a6ec-7b9d46cdd48d",
         },
       };
       const sharedDefaults = [
