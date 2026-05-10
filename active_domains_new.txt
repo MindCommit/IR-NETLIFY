@@ -1,3 +1,14 @@
 teal-sprite-f29cb1.netlify.app
+jazzy-eclair-fb4402.netlify.app
+visionary-buttercream-f43f18.netlify.app
+radiant-nougat-018c90.netlify.app
+bucolic-taffy-8abb47.netlify.app
+jazzy-fox-baf740.netlify.app
+glittery-croissant-4d595b.netlify.app
+storied-gnome-1fd5c4.netlify.app
+serene-bonbon-933eae.netlify.app
+precious-sunflower-d0c68e.netlify.app
+inspiring-biscotti-f4797a.netlify.app
+majestic-melomakarona-b9a702.netlify.app
 leafy-yeot-838518.netlify.app
 
