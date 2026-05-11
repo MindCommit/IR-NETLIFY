@@ -13,3 +13,4 @@ ir-netlify-subasdk9.netlify.app
 dazzling-alpaca-52815d.netlify.app
 benevolent-madeleine-209581.netlify.app
 superlative-paprenjak-b98776.netlify.app
+ir-netylify-1.netlify.app
