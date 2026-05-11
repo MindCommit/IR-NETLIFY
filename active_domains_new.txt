@@ -12,3 +12,4 @@ majestic-melomakarona-b9a702.netlify.app
 leafy-yeot-838518.netlify.app
 teal-sprite-f29cb1.netlify.app
 kaleidoscopic-bienenstitch-13a28f.netlify.app
+statuesque-unicorn-6d76f6.netlify.app
