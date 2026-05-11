@@ -9,7 +9,5 @@ precious-sunflower-d0c68e.netlify.app
 inspiring-biscotti-f4797a.netlify.app
 majestic-melomakarona-b9a702.netlify.app
 leafy-yeot-838518.netlify.app
-kaleidoscopic-bienenstitch-13a28f.netlify.app
-https://teal-sprite-f29cb1.netlify.app
-https://leafy-yeot-838518.netlify.app
 teal-sprite-f29cb1.netlify.app
+kaleidoscopic-bienenstitch-13a28f.netlify.app
