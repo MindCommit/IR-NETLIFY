@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Core Logic
+      - name: Run Monitor and Generator
         run: |
           python monitor.py 
           python generator.py
@@ -32,6 +32,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add domain.txt domain_new.txt active_domains.txt active_domains_new.txt failed_domains.txt failed_domains_new.txt IR_NETLIFY_SUB.txt IR_NETLIFY_SUB_new.txt
-          git commit -m "Auto-Fix: Domains updated and Subscriptions regenerated"
+          git add .
+          git commit -m "Auto-Fix: Domain replaced and configs regenerated" || exit 0
           git push
