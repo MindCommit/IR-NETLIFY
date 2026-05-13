@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=450" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.5.2</title>
+		<meta name="viewport" content="width=480" />
+		<title>IR NETLIFY CONFIG GENERATOR V9.5.6</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -144,7 +144,7 @@
 				background: rgba(255, 255, 255, 0.03);
 				border: 1px solid #30363d;
 				color: #8b949e;
-				border-radius: 8px;
+				border-radius: 10px;
 				cursor: pointer;
 				font-weight: bold;
 				transition: all 0.3s;
@@ -191,6 +191,13 @@
 				color: var(--theme-netlify);
 				background: rgba(0, 207, 255, 0.1);
 				box-shadow: 0 0 7px rgba(0, 207, 255, 0.3);
+			}
+
+			.sub-tab-btn.active-version {
+				border-color: #ffd700 !important;
+				color: #ffd700 !important;
+				box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+				background: rgba(255, 215, 0, 0.1) !important;
 			}
 
 			select.styled-select {
@@ -531,25 +538,6 @@
 				font-weight: bold;
 			}
 
-			.version-warning {
-				color: var(--neon-red);
-				font-size: 0.7rem;
-				text-align: center;
-				margin-top: -10px;
-				margin-bottom: 20px;
-				line-height: 1.6;
-				background: rgba(255, 10, 30, 0.05);
-				padding: 10px;
-				border-radius: 8px;
-				border: 3px dashed rgba(255, 10, 0, 0.3);
-			}
-
-			.version-warning a {
-				color: #bf7e0d;
-				text-decoration: underline;
-				font-weight: bold;
-			}
-
 			.input-with-button {
 				display: flex;
 				gap: 10px;
@@ -653,18 +641,19 @@
 
 			#server-checkboxes label img {
 				display: inline-block;
-				min-width: 20px;
-				min-height: 20px;
+				max-width: 20px;
+				max-height: 20px;
 				object-fit: contain;
+				margin-right: 1px;
 			}
 
 			#server-checkboxes label {
-				min-height: 16px;
+				min-height: 20px;
 			}
 
 			#server-checkboxes img {
-				width: 20px;
-				height: 20px;
+				width: 16px;
+				height: 16px;
 				flex-shrink: 0;
 			}
 		</style>
@@ -674,7 +663,7 @@
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.5.2
+				CONFIG GENERATOR V9.5.6
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -682,15 +671,12 @@
 					<span class="info-icon" onclick="showInfo(event, 'netlify')">?</span>
 				</button>
 			</div>
-			<div class="version-warning">
-				این نسخه فقط روی
-				<a href="https://github.com/IR-NETLIFY/IR_NETLIFY-RELAY/releases/tag/v1.0.3">ورژن جدید 1.0.3 پروژه</a>
-				عمل میکند
-				<br />
-				برای نسخه قدیمی پروژه از
-				<a href="https://ir-netlify.github.io/NETLIFY/old/">کانفیگ ساز قدیمی</a>
-				استفاده کنید
+
+			<div class="tabs" style="border-bottom: none; margin-bottom: 8px; gap: 10px">
+				<button class="sub-tab-btn active-version" id="ver-103" onclick="setAppVersion('1.0.3')">V 1.0.3</button>
+				<button class="sub-tab-btn" id="ver-102" onclick="setAppVersion('1.0.2')">V 1.0.2</button>
 			</div>
+
 			<div id="netlify-options">
 				<button class="sub-tab-btn" id="btn-shecan" onclick="setNetlifyMode('shecan')">
 					IP + SNI
@@ -730,88 +716,85 @@
 				</div>
 			</div>
 
-			<div id="default-settings" style="display: none; border: 2px solid var(--theme-netlify); padding: 15px; border-radius: 12px; margin-bottom: 15px; background: rgba(0, 225, 255, 0.02)">
+			<div id="default-settings" style="display: none; border: 2px solid var(--theme-netlify); padding: 10px; border-radius: 9px; margin-bottom: 15px; background: rgba(0, 225, 255, 0.02)">
 				<div class="input-group">
 					<label style="color: var(--theme-netlify)">Select Server</label>
-					<div id="server-checkboxes" style="display: grid; grid-template-columns: repeat(2, 1fr); row-gap: 2px; column-gap: 6px; background: #0d1117; padding: 10px; border-radius: 12px; border: 2px solid #30363d; width: 100%; box-sizing: border-box; justify-content: center">
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+					<div id="server-checkboxes" style="display: grid; grid-template-columns: repeat(3, 1fr); row-gap: 0px; column-gap: 5px; background: #0d1117; padding: 8px; border-radius: 6px; border: 2px solid #30363d; width: 100%; box-sizing: border-box; justify-content: center">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server1" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> Parsa
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Parsa
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server2" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="18" height="18" onerror="this.remove()" /> Xarheon
+							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="14" height="14" onerror="this.remove()" /> Xarheon
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server3" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/se.svg" width="20" height="20" onerror="this.remove()" /> BEHNAM
+							<img src="https://hatscripts.github.io/circle-flags/flags/se.svg" width="14" height="14" onerror="this.remove()" /> BEHNAM
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server4" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="20" height="20" onerror="this.remove()" /> Saman 1
+							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="14" height="14" onerror="this.remove()" /> Saman 1
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server5" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="20" height="20" onerror="this.remove()" /> Alwinbalot
+							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="14" height="14" onerror="this.remove()" /> Alwinbalot
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server6" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="20" height="20" onerror="this.remove()" /> Mostafa
+							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="14" height="14" onerror="this.remove()" /> Mostafa
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server7" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> Farshid
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Farshid
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server8" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> mohsen
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> mohsen
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server9" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/tr.svg" width="18" height="18" onerror="this.remove()" /> Ali
+							<img src="https://hatscripts.github.io/circle-flags/flags/tr.svg" width="14" height="14" onerror="this.remove()" /> Ali
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server10" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> shabgard
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> shabgard
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server11" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/us.svg" width="18" height="18" onerror="this.remove()" /> Saman 2
+							<img src="https://hatscripts.github.io/circle-flags/flags/us.svg" width="14" height="14" onerror="this.remove()" /> Saman 2
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server12" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> Pouya
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Pouya
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server13" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/ca.svg" width="20" height="20" onerror="this.remove()" /> Masoud
+							<img src="https://hatscripts.github.io/circle-flags/flags/ca.svg" width="14" height="14" onerror="this.remove()" /> Masoud
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server14" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> Navid
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Navid
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server15" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/us.svg" width="20" height="20" onerror="this.remove()" /> AbolUp
+							<img src="https://hatscripts.github.io/circle-flags/flags/us.svg" width="14" height="14" onerror="this.remove()" /> AbolUp
 						</label>
-
-						<label style="display: flex; align-items: center; gap: 5px; color: white; font-size: 0.75rem; cursor: pointer; background: #161b22; padding: 8px; border-radius: 6px">
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server16" />
-							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="20" height="20" onerror="this.remove()" /> Hossein
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Hossein
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server17" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/se.svg" width="14" height="14" onerror="this.remove()" /> DarkSoul
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server18" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> Meshke
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server19" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="14" height="14" onerror="this.remove()" /> Rahgozar
 						</label>
 					</div>
 				</div>
@@ -873,13 +856,15 @@
 			</div>
 		</div>
 		<script>
+			let appVersion = "1.0.3";
 			let currentPlatform = "netlify";
 			let netlifyMode = "shecan";
 			let configMode = "default";
 			let selectedCore = "xray";
+
 			const predefinedServers = {
 				server1: {
-					name: "ParsaServer",
+					name: "parsashonam",
 					address: "netlify.parsashonam.sbs:444",
 					path: "/p4r34m",
 					user: "Telegram-Parsashonam",
@@ -898,15 +883,15 @@
 				},
 				server4: {
 					name: "Saman 1",
-					address: "https://pa.sam4.lol:8096",
-					path: "/asekhi",
-					user: "8db56d27-e7a2-434c-bce0-0c18d59fb6cd",
+					address: "http://pa.sam4.lol:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
 				},
 				server5: {
 					name: "Alwinbalot",
-					address: "https://solar.latnashobivojod.shop:443",
-					path: "/jhiuiu",
-					user: "5cefde6e-867f-452d-8667-d30b01c63050",
+					address: "https://solar.latnashobivojod.shop:444",
+					path: "/balot",
+					user: "b9fd3eb8-65ba-4850-9b39-25c94bfc162e",
 				},
 				server6: {
 					name: "Mostafa",
@@ -974,6 +959,24 @@
 					path: "/IR_NETLIFY",
 					user: "598cbaec-00f6-4d84-8644-b35fdcec6904",
 				},
+				server17: {
+					name: "DarkSoul",
+					address: "89.22.236.213:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
+				},
+				server18: {
+					name: "Meshke",
+					address: "https://meshke.imissher.shop:444",
+					path: "/meshke",
+					user: "6ff4e855-cb98-47aa-901c-b787c898b6bb",
+				},
+				server19: {
+					name: "Rahgozar",
+					address: "https://s1.rahgozar.tr:444",
+					path: "/xhttp444",
+					user: "c18d7142-3adc-491a-a0af-518a67d21c19",
+				},
 			};
 			const sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
 			const data = {
@@ -989,6 +992,24 @@
 				Best_domains: ["jobset.sigs.k8s.io", "kind.sigs.k8s.io", "vuejs.org", "cluster-api.sigs.k8s.io", "kubernetes.io", "gateway-api.sigs.k8s.io", "letsencrypt.org"],
 				Best_ips: ["65.109.34.234", "94.130.70.160", "63.141.252.203", "94.130.50.12", "50.7.5.83", "142.54.178.211", "94.130.33.41", "144.76.1.88", "138.201.54.122", "95.216.69.37", "94.130.13.19"],
 			};
+
+			function setAppVersion(v) {
+				appVersion = v;
+				document.getElementById("ver-103").classList.toggle("active-version", v === "1.0.3");
+				document.getElementById("ver-102").classList.toggle("active-version", v === "1.0.2");
+
+				const defaultBtn = document.getElementById("btn-default");
+				const serverSelection = document.getElementById("default-settings");
+
+				if (v === "1.0.2") {
+					defaultBtn.innerHTML = "Parsa Server";
+					serverSelection.style.display = "none";
+				} else {
+					defaultBtn.innerHTML = "💙 Donated Server";
+					if (configMode === "default") serverSelection.style.display = "block";
+				}
+				hideOutputs();
+			}
 
 			function setPlatform() {
 				document.getElementById("tutorial-link").style.display = "inline-block";
@@ -1008,12 +1029,15 @@
 
 			function setConfigMode(mode) {
 				configMode = mode;
-
 				document.querySelectorAll("#netlify-config-type .sub-tab-btn").forEach((b) => b.classList.remove("active"));
 				document.getElementById(`btn-${mode}`).classList.add("active");
 				document.getElementById("custom-settings").style.display = mode === "custom" ? "block" : "none";
-				document.getElementById("default-settings").style.display = mode === "default" ? "block" : "none";
 
+				if (mode === "default") {
+					document.getElementById("default-settings").style.display = appVersion === "1.0.2" ? "none" : "block";
+				} else {
+					document.getElementById("default-settings").style.display = "none";
+				}
 				hideOutputs();
 			}
 
@@ -1044,6 +1068,7 @@
 				ipList.value = data.Best_ips.join("\n");
 				ipList.classList.remove("error-border");
 			}
+
 			function getInputs() {
 				let hasError = false;
 
@@ -1097,18 +1122,21 @@
 						path: customPath.startsWith("/") ? customPath : "/" + customPath,
 					});
 				} else {
-					const checkedBoxes = document.querySelectorAll('input[name="server-choice"]:checked');
-
-					if (checkedBoxes.length === 0) {
-						showError(checkboxContainer);
-						hasError = true;
+					if (appVersion === "1.0.2") {
+						selectedServers.push(predefinedServers.server1);
 					} else {
-						checkedBoxes.forEach((cb) => {
-							const srv = predefinedServers[cb.value];
-							if (srv) {
-								selectedServers.push(srv);
-							}
-						});
+						const checkedBoxes = document.querySelectorAll('input[name="server-choice"]:checked');
+						if (checkedBoxes.length === 0) {
+							showError(checkboxContainer);
+							hasError = true;
+						} else {
+							checkedBoxes.forEach((cb) => {
+								const srv = predefinedServers[cb.value];
+								if (srv) {
+									selectedServers.push(srv);
+								}
+							});
+						}
 					}
 				}
 
@@ -1140,13 +1168,16 @@
 				selectedServers.forEach((srv) => {
 					const { user, path, address: serverAddress, name: serverName } = srv;
 
-					const extraJson = JSON.stringify({
+					let extraData = {
 						xPaddingBytes: "1-1",
 						scMaxEachPostBytes: "1000000",
-						headers: { "x-host": serverAddress },
-					});
+					};
 
-					const encodedExtra = encodeURIComponent(extraJson);
+					if (appVersion === "1.0.3") {
+						extraData.headers = { "x-host": serverAddress };
+					}
+
+					const encodedExtra = encodeURIComponent(JSON.stringify(extraData));
 					const encodedPath = encodeURIComponent(path);
 
 					if (netlifyMode === "shecan") {
@@ -1166,8 +1197,7 @@
 
 				document.getElementById("result-area").value = results.join("\n");
 				document.getElementById("output-container").style.display = "block";
-
-				document.getElementById("config-count").innerText = `${results.length} CONFIGS GENERATED  ✓ `;
+				document.getElementById("config-count").innerText = `${results.length} CONFIGS GENERATED ✓`;
 			}
 
 			async function copyToClipboard(id, btnId) {
@@ -1233,11 +1263,14 @@
 					btn.style.color = "#00c40d";
 				}, 4000);
 			}
+
 			window.onload = () => {
 				setPlatform();
 				setNetlifyMode("shecan");
+				setAppVersion("1.0.3");
 				setConfigMode("default");
 			};
+
 			async function pasteToArea(targetId) {
 				const area = document.getElementById(targetId);
 				try {
@@ -1273,7 +1306,7 @@
 				},
 				direct_sni: {
 					title: "Direct SNI",
-					content: `اکثر sni ها روی حالت مستقیم فیلتر شده اند و احتمال اتصال این کانفیگ ها کم است<\/b>
+					content: `در این حالت مستقیم از sni برای آدرس کانفیگ استفاده می شود<\/b>
         																					
         																				
 																				<br>
