@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=480" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.5.6</title>
+		<title>IR NETLIFY CONFIG GENERATOR V9.5.7</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -663,7 +663,7 @@
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.5.6
+				CONFIG GENERATOR V9.5.7
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -795,6 +795,10 @@
 						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server19" />
 							<img src="https://hatscripts.github.io/circle-flags/flags/fi.svg" width="14" height="14" onerror="this.remove()" /> Rahgozar
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server20" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/gb.svg" width="14" height="14" onerror="this.remove()" /> Dante
 						</label>
 					</div>
 				</div>
@@ -977,7 +981,14 @@
 					path: "/xhttp444",
 					user: "c18d7142-3adc-491a-a0af-518a67d21c19",
 				},
+				server20: {
+					name: "Dante",
+					address: "212.74.39.210:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
+				},
 			};
+			
 			const sharedDefaults = ["helm.sh", "keda.sh", "rook.io", "istio.io", "cilium.io", "vuejs.org", "nuxt.com", "nuxr.com", "vitejs.dev", "smashingmagazine.com", "pnpm.io", "fluxcd.io", "harbor.io", "calico.org", "linkerd.io", "openebs.io", "tekton.dev", "longhorn.io", "blog.helm.sh", "docs.helm.sh", "crossplane.io", "kubernetes.io", "kubebuilder.io", "cert-manager.io", "letsencrypt.org", "kind.sigs.k8s.io", "kops.sigs.k8s.io", "krew.sigs.k8s.io", "kwok.sigs.k8s.io", "kueue.sigs.k8s.io", "jobset.sigs.k8s.io", "kaniko.sigs.k8s.io", "minikube.sigs.k8s.io", "operatorframework.io", "container.sigs.k8s.io", "kustomize.sigs.k8s.io", "argo-cd.readthedocs.io", "cluster-api.sigs.k8s.io", "descheduler.sigs.k8s.io", "gateway-api.sigs.k8s.io", "external-dns.sigs.k8s.io", "service-apis.sigs.k8s.io", "image-builder.sigs.k8s.io", "kubectl.docs.kubernetes.io", "metrics-server.sigs.k8s.io", "scheduler-plugins.sigs.k8s.io", "controller-runtime.sigs.k8s.io", "prometheus-operator.sigs.k8s.io", "node-feature-discovery.sigs.k8s.io", "hierarchical-namespaces.sigs.k8s.io", "secrets-store-csi-driver.sigs.k8s.io", "security-profiles-operator.sigs.k8s.io", "cluster-proportional-autoscaler.sigs.k8s.io"];
 			const data = {
 				netlify_normal: {
