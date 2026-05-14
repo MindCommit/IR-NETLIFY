@@ -1,4 +1,5 @@
 bucolic-taffy-8abb47.netlify.app
+radiant-nougat-018c90.netlify.app
 jazzy-fox-baf740.netlify.app
 glittery-croissant-4d595b.netlify.app
 storied-gnome-1fd5c4.netlify.app
