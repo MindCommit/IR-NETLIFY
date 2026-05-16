@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=480" />
-		<title>IR NETLIFY CONFIG GENERATOR V9.6.1</title>
+		<title>IR NETLIFY CONFIG GENERATOR V9.6.2</title>
 		<style>
 			@font-face {
 				font-family: "CustomFont";
@@ -702,7 +702,7 @@
 		<div class="container">
 			<h2>
 				IR NETLIFY <br />
-				CONFIG GENERATOR V9.6.1
+				CONFIG GENERATOR V9.6.2
 			</h2>
 			<div class="tabs">
 				<button class="tab-btn active" id="tab-netlify">
@@ -854,6 +854,10 @@
 						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
 							<input type="checkbox" name="server-choice" value="server24" />
 							<img src="https://hatscripts.github.io/circle-flags/flags/nl.svg" width="14" height="14" onerror="this.remove()" /> Phoenix
+						</label>
+						<label style="display: flex; align-items: center; gap: 1px; color: white; font-size: 0.5rem; cursor: pointer; background: #161b22; padding: 5px; border-radius: 6px">
+							<input type="checkbox" name="server-choice" value="server24" />
+							<img src="https://hatscripts.github.io/circle-flags/flags/de.svg" width="14" height="14" onerror="this.remove()" /> cowboy
 						</label>
 					</div>
 				</div>
@@ -1129,6 +1133,12 @@
 				server24: {
 					name: "Phoenix",
 					address: "62.84.172.72:444",
+					path: "/IR_NETLIFY",
+					user: "%40IR_NETLIFY",
+				},
+				server24: {
+					name: "cowboy",
+					address: "185.250.41.220:444",
 					path: "/IR_NETLIFY",
 					user: "%40IR_NETLIFY",
 				},
